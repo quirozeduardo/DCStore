@@ -12,8 +12,8 @@
 
     </head>
     <body>
-        <header class="bg-primary">
-            <nav class="container navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="bg-primary">
+            <header class="container navbar navbar-expand navbar-dark bg-primary">
                 <a class="navbar-brand" href="{{ url('/') }}">Inicio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,11 +29,11 @@
                       Peliculas(Generos)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ url('/movies') }}">Todo</a>
+                      <a class="dropdown-item" href="{{ url('/peliculas') }}">Todo</a>
                       <div class="dropdown-divider"></div>
                       @inject('genders','DCStore\Gender')
                       @foreach($genders::all() as $gender)
-                        <a class="dropdown-item" href="#">{{$gender->gender}}</a> 
+                        <a class="dropdown-item" href="{{ url("/peliculas/genero/$gender->gender") }}">{{$gender->gender}}</a> 
                       @endforeach                                           
                     </div>
                   </li>
@@ -42,26 +42,26 @@
                       Peliculas(Calidad)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ url('/movies') }}">Todo</a>
+                      <a class="dropdown-item" href="{{ url('/peliculas') }}">Todo</a>
                       <div class="dropdown-divider"></div>
                       @inject('qualitys','DCStore\Quality')
                       @foreach($qualitys::all() as $quality)
-                        <a class="dropdown-item" href="#">{{$quality->quality}}</a> 
+                        <a class="dropdown-item" href="{{ url("/peliculas/calidad/$quality->quality") }}">{{$quality->quality}}</a> 
                       @endforeach 
                     </div>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ url('/series') }}">
                       Series
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ url('/juegos') }}">
                       Juegos
                     </a>
                   </li>
                   <li class="nav-item ">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ url('/software') }}">
                       Software
                     </a>
                   </li>
@@ -71,20 +71,22 @@
                   <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 </div>
-            </nav>
-        </header>
+            </header>
+        </div>
         <div class="container" >
             <div class="row" >
                 <div class="col-12">
                     @include('templates.partials.slider')
                 </div>
-                <div class="col-12" >
+                <div class="container-sections col-12" >
                     <div class="row">
                         <section class="col-md-9 col-12">
-                            @yield('content')
+                          @yield('content')
                         </section>
                         <aside class="col-md-3 col-12">
-                            aside
+                          @include('templates.partials.suscribe_sm')
+                          @include('templates.partials.last_add')
+                          @include('templates.partials.last_updated')                          
                         </aside>
                     </div>
                 </div>

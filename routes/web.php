@@ -12,5 +12,14 @@
 */
 
 Route::get('/', 'IndexController@loadAll');
-Route::get('/movies', 'MoviesController@loadMovies');
+Route::get('/peliculas', 'MoviesController@loadMovies');
+Route::get('/peliculas/calidad/{quality}', function(){
+
+});
+Route::get('/peliculas/genero/{gender}', function(){
+	
+});
+Route::get('/series', 'MoviesController@loadMovies');
+Route::get('/juegos', 'MoviesController@loadMovies');
+Route::get('/software', 'MoviesController@loadMovies');
 

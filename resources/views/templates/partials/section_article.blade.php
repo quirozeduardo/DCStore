@@ -1,5 +1,5 @@
 
-<article class="col-12">
+<article class="section-article-container col-12">
 	<div class="section-article-title-container">
 		<h3>{{ $title }}</h3>
 	</div>	

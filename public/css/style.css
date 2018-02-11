@@ -1,3 +1,12 @@
+/*app.blade.php*/
+html, body{
+	background-color: #fff;
+}
+
+.container-sections{
+	background-color: #fff;
+	border-radius: 2px 2px 0px 0px;
+}
 /*card_article.blade.php*/
 .card-article{
 	padding: 5px;
@@ -17,17 +26,22 @@
 	height: 181px;
 }
 /*section_article.blade.php*/
-
+.section-article-container{
+	margin: 20px 0px 30px;
+}
 .section-article-title-container{
 	color: #FFFFFF;
 	background-color: #005ABF;
 	border-radius: 2px 2px 0px 0px;
 	border: 2px solid #005ABF;
+	text-align: center;
+
 }
 .section-article-articles-container{
 	margin: 0px;
 	border-radius: 0px 0px 3px 3px;
 	border: 2px solid #005ABF;
+
 }
 
 /*dots.blade.php*/
@@ -55,3 +69,30 @@
 	border: 2px solid #133452;
 }
 
+/*widget*/
+.widget-container{
+	padding: 0px;
+	margin: 20px 0px 10px;
+	border-radius: 3px;
+	padding: 5px;
+	border: 1px solid #133452;
+
+
+}
+.widget-title-container{
+	background-color: #1F6678;
+	text-align: center;
+	color: #fff;
+}
+.widget-content{
+	border-radius: 3px;
+	border: 1px solid #133452;
+}
+/*suscribe_sm.blade.php*/
+.input-email-suscribe{
+	width: 100%;
+	margin: 10px;
+}
+.button-submit-suscribe{
+	margin: 10px;
+}

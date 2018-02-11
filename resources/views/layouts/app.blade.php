@@ -13,7 +13,7 @@
     <body>
         <header class="bg-primary">
             <nav class="container navbar navbar-expand-lg navbar-dark bg-primary">
-                <a class="navbar-brand" href="#">Inicio</a>
+                <a class="navbar-brand" href="{{ url('/') }}">Inicio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>

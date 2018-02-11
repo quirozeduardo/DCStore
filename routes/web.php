@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.app');
-});
+Route::get('/', 'MainController@loadAll');
 Route::get('/movies', 'MoviesController@loadMovies');
 

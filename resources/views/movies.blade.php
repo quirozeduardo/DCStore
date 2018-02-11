@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-	@foreach($articles as $article)
-		@include('templates.partials.card_article',compact('article'))
-	@endforeach
+	<div class="row">
+		@include('templates.partials.section_article',['articles'=>$articles,'title'=>'Películas'])
+		@include('templates.partials.dots',compact('ndots'))
+	</div>
 @endsection

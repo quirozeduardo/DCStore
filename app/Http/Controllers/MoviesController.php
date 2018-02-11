@@ -9,8 +9,15 @@ class MoviesController extends Controller
 {
     public function loadMovies()
     {
-    	$articles=Article::where('type',3)->get();
+    	$nShow=10;
+    	$result=Article::where('type',3)->orderBy('updated_at','desc')->get();
+    	$count=$result->count();
+    	$articles=$result->take($nShow);
+		$ndots=($count/$nShow);
+		if(($count%$nShow)!=0)
+			$ndots++;
+		$ndots=floor($ndots);
     	//dd($articles->count());
-    	return view('movies',compact('articles'));
+    	return view('movies',compact('articles','ndots'));
     }
 }

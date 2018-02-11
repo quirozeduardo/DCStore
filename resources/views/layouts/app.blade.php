@@ -28,10 +28,12 @@
                       Peliculas(Generos)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="{{ url('/movies') }}">Todo</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      @inject('genders','DCStore\Gender')
+                      @foreach($genders::all() as $gender)
+                        <a class="dropdown-item" href="#">{{$gender->gender}}</a> 
+                      @endforeach                                           
                     </div>
                   </li>
                   <li class="nav-item dropdown">
@@ -39,10 +41,12 @@
                       Peliculas(Calidad)
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="{{ url('/movies') }}">Todo</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      @inject('qualitys','DCStore\Quality')
+                      @foreach($qualitys::all() as $quality)
+                        <a class="dropdown-item" href="#">{{$quality->quality}}</a> 
+                      @endforeach 
                     </div>
                   </li>
                   <li class="nav-item">
@@ -71,7 +75,7 @@
         <div class="container">
             <div class="row">
                 <div class="slide col-12">
-                    slides
+                    @include('templates.partials.slider')
                 </div>
                 <div class="col-12">
                     <div class="row">
@@ -90,5 +94,57 @@
      {!! Html::script('js/jquery-3.3.1.min.js') !!}
      {!! Html::script('js/popper.min.js') !!}
      {!! Html::script('bootstrap/js/bootstrap.min.js') !!}
+     {!! Html::script('js/jCarousel.min.js') !!}
+     <script>
+       (function($) {
+          $(function() {
+              var jcarousel = $('.jcarousel');
+
+              jcarousel
+                  .on('jcarousel:reload jcarousel:create', function () {
+                      var carousel = $(this),
+                          width = carousel.innerWidth();
+
+                      if (width >= 600) {
+                          width = width / 3;
+                      } else if (width >= 350) {
+                          width = width / 2;
+                      }
+
+                      carousel.jcarousel('items').css('width', Math.ceil(width) + 'px');
+                  })
+                  .jcarousel({
+                      wrap: 'circular'
+                  });
+
+              $('.jcarousel-control-prev')
+                  .jcarouselControl({
+                      target: '-=1'
+                  });
+
+              $('.jcarousel-control-next')
+                  .jcarouselControl({
+                      target: '+=1'
+                  });
+
+              $('.jcarousel-pagination')
+                  .on('jcarouselpagination:active', 'a', function() {
+                      $(this).addClass('active');
+                  })
+                  .on('jcarouselpagination:inactive', 'a', function() {
+                      $(this).removeClass('active');
+                  })
+                  .on('click', function(e) {
+                      e.preventDefault();
+                  })
+                  .jcarouselPagination({
+                      perPage: 1,
+                      item: function(page) {
+                          return '<a href="#' + page + '">' + page + '</a>';
+                      }
+                  });
+          });
+      })(jQuery);
+     </script>
     </body>
 </html>

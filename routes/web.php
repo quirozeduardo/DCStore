@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'MainController@loadAll');
+Route::get('/', 'IndexController@loadAll');
 Route::get('/movies', 'MoviesController@loadMovies');
 

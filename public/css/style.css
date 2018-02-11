@@ -17,10 +17,7 @@
 	height: 181px;
 }
 /*section_article.blade.php*/
-.section-article{
-	padding: 0px;
 
-}
 .section-article-title-container{
 	color: #FFFFFF;
 	background-color: #005ABF;
@@ -50,7 +47,11 @@
     margin: 5px;
 }
 
-
-
-
+/*slider.blade.php*/
+.slider-container{
+	background-color: #133452;
+	border-radius: 15px;
+	margin: 10px 0px 10px;
+	border: 2px solid #133452;
+}
 

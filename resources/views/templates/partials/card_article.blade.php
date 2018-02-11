@@ -1,7 +1,7 @@
 <div class="card-article d-inline-block">
-	<a href="" title="{{ $article->image }}">
+	<a href="{{ $url or "" }}" title="{{ $title }}">
 		<div>
-			<img src="{{ $article->image }}">
+			<img src="{{ $image }}">
 		</div>
 	</a>
 </div>

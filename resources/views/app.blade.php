@@ -74,7 +74,7 @@
         <div class="container" >
             <div class="row" >
                 <div class="col-12">
-                    @include('templates.partials.slider')
+                    {!! $sliderView !!}
                 </div>
                 <div class="container-sections col-12" >
                     <div class="row">

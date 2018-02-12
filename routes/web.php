@@ -13,12 +13,9 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/peliculas', 'IndexController@movies');
-Route::get('/peliculas/calidad/{quality}', function(){
-
-});
-Route::get('/peliculas/genero/{gender}', function(){
-	
-});
+Route::get('/peliculas/{id}', 'IndexController@movie');
+Route::get('/peliculas/calidad/{quality}', 'IndexController@moviesQuality');
+Route::get('/peliculas/genero/{gender}', 'IndexController@moviesGender');
 Route::get('/series', 'IndexController@series');
 Route::get('/juegos', 'IndexController@games');
 Route::get('/software', 'IndexController@softwares');

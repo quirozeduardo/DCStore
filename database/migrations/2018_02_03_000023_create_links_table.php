@@ -24,7 +24,7 @@ class CreateLinksTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->string('id',30);
-            $table->string('article', 30);
+            $table->string('article', 100);
             $table->unsignedInteger('type');
             $table->string('description',512)->nullable();
 

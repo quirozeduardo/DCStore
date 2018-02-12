@@ -23,7 +23,7 @@ class CreatePhotoTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('id', 30);
+            $table->string('id', 100);
             $table->string('photo',1024);
             
             $table->index(["id"], 'photo_movie_idx');

@@ -31,8 +31,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ url('/peliculas') }}">Todo</a>
                       <div class="dropdown-divider"></div>
-                      @inject('genders','DCStore\Gender')
-                      @foreach($genders::all() as $gender)
+                      @foreach($genders as $gender)
                         <a class="dropdown-item" href="{{ url("/peliculas/genero/$gender->gender") }}">{{$gender->gender}}</a> 
                       @endforeach                                           
                     </div>
@@ -44,8 +43,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{{ url('/peliculas') }}">Todo</a>
                       <div class="dropdown-divider"></div>
-                      @inject('qualitys','DCStore\Quality')
-                      @foreach($qualitys::all() as $quality)
+                      @foreach($qualitys as $quality)
                         <a class="dropdown-item" href="{{ url("/peliculas/calidad/$quality->quality") }}">{{$quality->quality}}</a> 
                       @endforeach 
                     </div>
@@ -81,7 +79,7 @@
                 <div class="container-sections col-12" >
                     <div class="row">
                         <section class="col-md-9 col-12">
-                          @yield('content')
+                          {!! $contentSection !!}
                         </section>
                         <aside class="col-md-3 col-12">
                           @include('templates.partials.suscribe_sm')

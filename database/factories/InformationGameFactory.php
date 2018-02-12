@@ -11,7 +11,7 @@ use Faker\Generator as Faker;
 $factory->define(DCStore\InformationGame::class, function (Faker $faker) {
     return [
         'id' => factory(Article::class)->create()->id,
-        'title' => $faker->sentence(1,true),
+        'title' => $faker->sentence(2,true),
         'release_date' => $faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
         'format' => $faker->randomElement(FormatGame::all()->pluck('id')->toArray()),
         'plataform' => $faker->randomElement(PlataformGame::all()->pluck('id')->toArray()),

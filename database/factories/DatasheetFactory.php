@@ -7,8 +7,8 @@ use DCStore\Information;
 $factory->define(DCStore\Datasheet::class, function (Faker $faker) {
     return [
         'id' => factory(Information::class)->create()->id,
-        'original_title' => $faker->sentence(3,true),
-        'another_title' => $faker->sentence(3,true),
+        'original_title' => $faker->sentence(4,true),
+        'another_title' => $faker->sentence(4,true),
         'year' => 1999,
         'duration' => 145,
         'country' => $faker->randomElement(Country::all()->pluck('id')->toArray()),

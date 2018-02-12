@@ -23,7 +23,7 @@ class CreateDatasheetTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('id', 30);
+            $table->string('id', 100);
             $table->string('original_title', 70);
             $table->string('another_title', 70);
             $table->integer('year');
@@ -40,8 +40,6 @@ class CreateDatasheetTable extends Migration
             $table->index(["id"], 'datasheet_information_idx');
 
             $table->unique(["id"], 'id_UNIQUE');
-
-
             $table->foreign('country', 'datasheet_country_idx')
                 ->references('id')->on('country')
                 ->onDelete('no action')

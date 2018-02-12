@@ -23,7 +23,7 @@ class CreateInformationSoftwareTable extends Migration
         if (Schema::hasTable($this->set_schema_table)) return;
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->string('id',30);
+            $table->string('id',100);
             $table->string('title', 70);
             $table->unsignedInteger('lenguage');
             $table->unsignedInteger('size');

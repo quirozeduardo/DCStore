@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 $factory->define(DCStore\Article::class, function (Faker $faker) {
 	$idf=$faker->randomElement(User::all()->pluck('id')->toArray());
     return [
-    	'id' => $faker->regexify('^[a-zA-Z0-9]{30}$'),
+    	'id' => $faker->regexify('^[a-zA-Z0-9]{100}$'),
         'type' => $faker->randomElement(ArticleType::all()->pluck('id')->toArray()),
         'image' => $faker->imageUrl(400, 600),
         'created_by' => $idf,

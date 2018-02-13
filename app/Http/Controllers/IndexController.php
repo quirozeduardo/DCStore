@@ -6,6 +6,7 @@ namespace DCStore\Http\Controllers;
 use DCStore\Gender;
 use DCStore\Quality;
 use DCStore\Article;
+use DCStore\Datasheet;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -151,7 +152,16 @@ class IndexController extends Controller
     }
     public function movie($id='')
     {
-        return $id;
+        $datasheet=Datasheet::where('id', $id)->get()->first();
+        $movie=view('show_movie',[
+            'datasheet' => $datasheet
+        ]);
+        return view('app',[
+            'sliderView' => $this->sliderView,
+            'contentSection' => $movie,
+            'genders' => $this->genders,
+            'qualitys' => $this->qualitys,
+        ]);
     }
     public function series()
     {

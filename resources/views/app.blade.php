@@ -13,7 +13,7 @@
     </head>
     <body>
         <div class="bg-primary">
-            <header class="container navbar navbar-expand navbar-dark bg-primary">
+            <header class="container navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="{{ url('/') }}">Inicio</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -64,16 +64,18 @@
                     </a>
                   </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <div class="form-inline my-2 my-lg-0">
+                  {{ Form::open(array('url' => '/buscar')) }}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+                  {{ Form::close() }}
+                </div>
                 </div>
             </header>
         </div>
         <div class="container" >
             <div class="row" >
-                <div class="col-12">
+                <div class="col-12" style="padding: 0px;">
                     {!! $sliderView !!}
                 </div>
                 <div class="container-sections col-12" >
@@ -100,7 +102,7 @@
        $('.bxslider').bxSlider({
           minSlides: 2,
           maxSlides: 7,
-          slideWidth: 155,
+          slideWidth: 160,
           slideMargin: 0,
           auto: true,
           pager:false,

@@ -19,4 +19,3 @@ Route::get('/peliculas/genero/{gender}', 'IndexController@moviesGender');
 Route::get('/series', 'IndexController@series');
 Route::get('/juegos', 'IndexController@games');
 Route::get('/software', 'IndexController@softwares');
-

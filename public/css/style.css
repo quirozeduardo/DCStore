@@ -1,11 +1,15 @@
 /*app.blade.php*/
 html, body{
-	background-color: #fff;
+	background-image: url("../images/bg.jpg");
 }
 
 .container-sections{
 	background-color: #fff;
-	border-radius: 2px 2px 0px 0px;
+	border-radius: 15px;
+	margin: 10px 0px 30px 0px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	
 }
 /*card_article.blade.php*/
 .card-article{
@@ -96,5 +100,3 @@ html, body{
 .button-submit-suscribe{
 	margin: 10px;
 }
-
-/*show_movie.blade.php*/

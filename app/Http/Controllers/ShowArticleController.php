@@ -20,26 +20,40 @@ class ShowArticleController extends Controller
 	private $qualitys;
     private $resultSlider;
     private $sliderView;
-    private $lastAdd;
-	public function __construct()
+    private $lastUpdated;
+    public function __construct()
     {
-    	$dataLastAdd=Article::select('datasheet.another_title as title','article.id')
+        $dataLastAdd=Article::select('datasheet.another_title as title','article.id')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',1)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
         $this->lastAdd=view('templates.partials.last_add',[
             'articles' => $dataLastAdd,
         ]);
-        $this->resultSlider=Article::where('type',1)->orderBy('updated_at','desc')->take(10)->get();
+        $dataLastAddUpdated=Article::select('datasheet.another_title as title','article.id')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+        $this->lastUpdated=view('templates.partials.last_updated',[
+            'articles' => $dataLastAddUpdated,
+        ]);
+        $this->resultSlider=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('created_at','desc')
+            ->take(10)
+            ->get();
         $this->sliderView=view('templates.partials.slider',[
             'articles' => $this->resultSlider,
         ]);
 
 
-    	$this->genders=Gender::all();
-    	$this->qualitys=Quality::all();
+        $this->genders=Gender::all();
+        $this->qualitys=Quality::all();
     }
     public function movie($id='')
     {
@@ -101,6 +115,7 @@ class ShowArticleController extends Controller
         ]);
         return view('app',[
         	'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
             'contentSection' => $templateArticle,
             'genders' => $this->genders,

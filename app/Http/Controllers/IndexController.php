@@ -17,21 +17,31 @@ class IndexController extends Controller
     private $resultSlider;
     private $sliderView;
     private $lastAdd;
+    private $lastUpdated;
 	public function __construct()
     {
         $dataLastAdd=Article::select('datasheet.another_title as title','article.id')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',1)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
         $this->lastAdd=view('templates.partials.last_add',[
             'articles' => $dataLastAdd,
         ]);
-        $this->resultSlider=Article::select('datasheet.another_title as title','article.id','article.image')
+        $dataLastAddUpdated=Article::select('datasheet.another_title as title','article.id')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',1)
             ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+        $this->lastUpdated=view('templates.partials.last_updated',[
+            'articles' => $dataLastAddUpdated,
+        ]);
+        $this->resultSlider=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
         $this->sliderView=view('templates.partials.slider',[
@@ -49,25 +59,25 @@ class IndexController extends Controller
     	$resultMovies=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',1)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
     	$resultSeries=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',2)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
     	$resultGames=Article::select('information_game.title as title','article.id','article.image')
             ->join('information_game','information_game.id','=','article.id')
             ->where('article.type',3)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
     	$resultSoftware=Article::select('information_software.title as title','article.id','article.image')
             ->join('information_software','information_software.id','=','article.id')
             ->where('article.type',4)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->take(10)
             ->get();
 
@@ -82,6 +92,7 @@ class IndexController extends Controller
 
     	return view('app',[
             'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $indexView,
     		'genders' => $this->genders,
@@ -95,7 +106,7 @@ class IndexController extends Controller
         $result=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',1)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->get();
         $count=$result->count();
         $articles=$result->take($nShow);
@@ -113,6 +124,7 @@ class IndexController extends Controller
 
         return view('app',[
             'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
             'contentSection' => $moviesView,
             'genders' => $this->genders,
@@ -128,7 +140,7 @@ class IndexController extends Controller
     	$result=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',2)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
@@ -145,6 +157,7 @@ class IndexController extends Controller
 
     	return view('app',[
             'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,
@@ -157,7 +170,7 @@ class IndexController extends Controller
     	$result=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',3)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
@@ -173,6 +186,7 @@ class IndexController extends Controller
 
     	return view('app',[
             'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,
@@ -185,7 +199,7 @@ class IndexController extends Controller
     	$result=Article::select('datasheet.another_title as title','article.id','article.image')
             ->join('datasheet','datasheet.id','=','article.id')
             ->where('article.type',4)
-            ->orderBy('updated_at','desc')
+            ->orderBy('created_at','desc')
             ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
@@ -202,6 +216,7 @@ class IndexController extends Controller
 
     	return view('app',[
             'contentAsideLastAdd' => $this->lastAdd,
+            'contentAsideLastUpdated' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,

@@ -5,7 +5,7 @@
 	<div class="section-article-articles-container">
 		@foreach($articles as $article)
 			@include('templates.partials.card_article',[
-				'title' => 'Titulo', 
+				'title' => $article->title, 
 				'image' => $article->image,
 				'url' => $article->id,
 				'urlPatern' => $urlPatern,

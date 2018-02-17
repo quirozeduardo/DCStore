@@ -3,7 +3,7 @@
         @foreach($articles as $article)
             <div>
                 @include('templates.partials.card_article',[
-                'title' => $article->id,
+                'title' => $article->title,
                 'image' => $article->image,
                 'url' => $article->id,
                 'urlPatern' => url('/peliculas'),

@@ -6,13 +6,7 @@ namespace DCStore\Http\Controllers;
 use DCStore\Gender;
 use DCStore\Quality;
 use DCStore\Article;
-use DCStore\Datasheet;
-use DCStore\Information;
-use DCStore\format;
-use DCStore\lenguage;
-use DCStore\subtitles;
-use DCStore\Country;
-use DCStore\Photo;
+
 
 use Illuminate\Http\Request;
 
@@ -22,10 +16,24 @@ class IndexController extends Controller
 	private $qualitys;
     private $resultSlider;
     private $sliderView;
-
+    private $lastAdd;
 	public function __construct()
     {
-        $this->resultSlider=Article::where('type',1)->orderBy('updated_at','desc')->take(10)->get();
+        $dataLastAdd=Article::select('datasheet.another_title as title','article.id')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+        $this->lastAdd=view('templates.partials.last_add',[
+            'articles' => $dataLastAdd,
+        ]);
+        $this->resultSlider=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
         $this->sliderView=view('templates.partials.slider',[
             'articles' => $this->resultSlider,
         ]);
@@ -38,14 +46,34 @@ class IndexController extends Controller
     {
         
 
-    	$resultMovies=Article::where('type',1)->orderBy('updated_at','desc')->take(10)->get();
-    	$resultSeries=Article::where('type',2)->orderBy('updated_at','desc')->take(10)->get();
-    	$resultGames=Article::where('type',3)->orderBy('updated_at','desc')->take(10)->get();
-    	$resultSoftware=Article::where('type',4)->orderBy('updated_at','desc')->take(10)->get();
+    	$resultMovies=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+    	$resultSeries=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',2)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+    	$resultGames=Article::select('information_game.title as title','article.id','article.image')
+            ->join('information_game','information_game.id','=','article.id')
+            ->where('article.type',3)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
+    	$resultSoftware=Article::select('information_software.title as title','article.id','article.image')
+            ->join('information_software','information_software.id','=','article.id')
+            ->where('article.type',4)
+            ->orderBy('updated_at','desc')
+            ->take(10)
+            ->get();
 
         
 
-    	$indexView=view('index',[
+    	$indexView=view('index',[            
     		'movies' => $resultMovies,
     		'series' => $resultSeries,
     		'games' => $resultGames,
@@ -53,6 +81,7 @@ class IndexController extends Controller
     	]);
 
     	return view('app',[
+            'contentAsideLastAdd' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $indexView,
     		'genders' => $this->genders,
@@ -63,7 +92,11 @@ class IndexController extends Controller
     {
         $nShow=50;
         
-        $result=Article::where('type',1)->orderBy('updated_at','desc')->get();
+        $result=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',1)
+            ->orderBy('updated_at','desc')
+            ->get();
         $count=$result->count();
         $articles=$result->take($nShow);
         $npages=($count/$nShow);
@@ -79,6 +112,7 @@ class IndexController extends Controller
         ]);
 
         return view('app',[
+            'contentAsideLastAdd' => $this->lastAdd,
             'sliderView' => $this->sliderView,
             'contentSection' => $moviesView,
             'genders' => $this->genders,
@@ -86,146 +120,16 @@ class IndexController extends Controller
         ]);
     }
 
-    public function moviesGender($gender='')
-    {
-        $nShow=50;
-        
-        if($gender!=''){          
-            $result=Article::select('article.id','article.updated_at','article.image')
-            ->join('information','information.id','=','article.id')
-            ->join('datasheet','datasheet.id','=','information.id')
-            ->join('genders','genders.id','=','datasheet.id')
-            ->join('gender','gender.id','=','genders.gender')
-            ->where('gender.gender',$gender)
-            ->orderBy('updated_at','desc')
-            ->get();
-        }
-        elseif(($gender!=''||$gender!='')||($gender==''||$gender==''))
-            $result=Article::where('type',1)->orderBy('updated_at','desc')->get();
-    	$count=$result->count();
-    	$articles=$result->take($nShow);
-		$npages=($count/$nShow);
-		if(($count%$nShow)!=0)
-			$npages++;
-		$npages=floor($npages);
-    	//dd($articles->count());
-    	$moviesView= view(
-    		'movies',[
-    		'articles' => $articles,
-    		'npages' => $npages,
-
-    	]);
-
-    	return view('app',[
-            'sliderView' => $this->sliderView,
-    		'contentSection' => $moviesView,
-    		'genders' => $this->genders,
-    		'qualitys' => $this->qualitys,
-    	]);
-    }
-    public function moviesQuality($quality='')
-    {
-        $nShow=50;
-        if($quality!=''){
-            $result=Article::select('article.id','article.updated_at','article.image')
-            ->join('information','information.id','=','article.id')
-            ->join('quality','quality.id','=','information.quality')
-            ->where('quality.quality',$quality)
-            ->orderBy('updated_at','desc')
-            ->get();
-        }
-        else
-            $result=Article::where('type',1)->orderBy('updated_at','desc')->get();
-        $count=$result->count();
-        $articles=$result->take($nShow);
-        $npages=($count/$nShow);
-        if(($count%$nShow)!=0)
-            $npages++;
-        $npages=floor($npages);
-        //dd($articles->count());
-        $moviesView= view(
-            'movies',[
-            'articles' => $articles,
-            'npages' => $npages,
-
-        ]);
-
-        return view('app',[
-            'sliderView' => $this->sliderView,
-            'contentSection' => $moviesView,
-            'genders' => $this->genders,
-            'qualitys' => $this->qualitys,
-        ]);
-    }
-    public function movie($id='')
-    {
-        $datasheet=Datasheet::where('id', $id)->get()->first();
-        $article=Article::where('id', $id)->get()->first();
-        $information=Information::where('id', $id)->get()->first();
-
-        $quality=Quality::where('id', $information->quality)->get()->first();
-        $format=Format::where('id', $information->format)->get()->first();
-        $lenguage=Lenguage::where('id', $information->lenguage)->get()->first();
-        $subtitles=Subtitles::where('id', $information->subtitles)->get()->first();
-
-        $country=Country::where('id', $datasheet->country)->get()->first();
-
-        $gendersTmp=Gender::select('gender.gender')
-            ->join('genders','genders.gender','=','gender.id')
-            ->where('genders.id',$id)
-            ->get();
-        $genders=array();
-        foreach ($gendersTmp as $var) {
-            $genders[]=$var->gender;
-        }
-
-
-        $photosTmp=Photo::where('id',$id)->get();
-        $photos=array();
-        foreach ($photosTmp as $var) {
-            $photos[]=$var->photo;
-        }
-        
-       
-        
-        $movie=view('show_movie',[
-            'quality' => $quality->quality,
-            'format' => $format->format,
-            'resolution' => $information->resolution_w."x".$information->resolution_h,
-            'size' => $information->size,
-            'lenguage' => $lenguage->lenguage,
-            'subtitles' => $subtitles->subtitles,
-
-            'original_title' => $datasheet->original_title,
-            'another_title' => $datasheet->another_title,
-            'year' => $datasheet->year,
-            'duration' => $datasheet->duration,
-            'country' => $country->country,
-            'directed' => $datasheet->directed,
-            'screenplay' => $datasheet->screenplay,
-            'music' => $datasheet->music,
-            'cinematography' => $datasheet->cinematography,
-            'starring' => $datasheet->starring,
-            'production_company' => $datasheet->production_company,
-            'genders' => $genders,
-        ]);
-        $templateArticle=view('templates.article_view',[
-            'contentSection' => $movie,
-            'title' => $datasheet->another_title,
-            'image' => $article->image,
-            'photos' => $photos
-        ]);
-        return view('app',[
-            'sliderView' => $this->sliderView,
-            'contentSection' => $templateArticle,
-            'genders' => $this->genders,
-            'qualitys' => $this->qualitys,
-        ]);
-    }
+    
+    
     public function series()
     {
     	$nShow=50;
-    	$result=Article::where('type',2)->orderBy('updated_at','desc')->get();
+    	$result=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',2)
+            ->orderBy('updated_at','desc')
+            ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
 		$npages=($count/$nShow);
@@ -240,6 +144,7 @@ class IndexController extends Controller
     	]);
 
     	return view('app',[
+            'contentAsideLastAdd' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,
@@ -249,7 +154,11 @@ class IndexController extends Controller
     public function games()
     {
     	$nShow=50;
-    	$result=Article::where('type',3)->orderBy('updated_at','desc')->get();
+    	$result=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',3)
+            ->orderBy('updated_at','desc')
+            ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
 		$npages=($count/$nShow);
@@ -263,6 +172,7 @@ class IndexController extends Controller
     	]);
 
     	return view('app',[
+            'contentAsideLastAdd' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,
@@ -272,7 +182,11 @@ class IndexController extends Controller
     public function softwares()
     {
     	$nShow=50;
-    	$result=Article::where('type',4)->orderBy('updated_at','desc')->get();
+    	$result=Article::select('datasheet.another_title as title','article.id','article.image')
+            ->join('datasheet','datasheet.id','=','article.id')
+            ->where('article.type',4)
+            ->orderBy('updated_at','desc')
+            ->get();
     	$count=$result->count();
     	$articles=$result->take($nShow);
 		$npages=($count/$nShow);
@@ -287,6 +201,7 @@ class IndexController extends Controller
     	]);
 
     	return view('app',[
+            'contentAsideLastAdd' => $this->lastAdd,
             'sliderView' => $this->sliderView,
     		'contentSection' => $moviesView,
     		'genders' => $this->genders,

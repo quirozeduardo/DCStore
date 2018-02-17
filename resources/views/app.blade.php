@@ -85,7 +85,7 @@
                         </section>
                         <aside class="col-md-3 col-12">
                           @include('templates.partials.suscribe_sm')
-                          @include('templates.partials.last_add')
+                          {!! $contentAsideLastAdd !!}
                           @include('templates.partials.last_updated')                          
                         </aside>
                     </div>
